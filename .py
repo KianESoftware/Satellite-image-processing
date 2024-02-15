@@ -6,8 +6,8 @@ import matplotlib
 
 
 config = SHConfig()
-config.sh_client_id = "sh-ef5a8a93-0fa7-4cd1-b392-4d058f3d611d"
-config.sh_client_secret = "df2iMfx7g8qcpDngaMvmi2LFdb3WW2n4"
+config.sh_client_id = "******************"
+config.sh_client_secret = "********************"
 config.sh_token_url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
 config.sh_base_url = "https://sh.dataspace.copernicus.eu"
 
@@ -43,7 +43,7 @@ evalscript_true_color = """
 """
 
 request_true_color = SentinelHubRequest(
-    data_folder= r"C:\Users\kiann\PycharmProjects\MyBestProject",
+    data_folder= r"path/to/your/directory",
     evalscript=evalscript_true_color,
     input_data=[
         SentinelHubRequest.input_data(
