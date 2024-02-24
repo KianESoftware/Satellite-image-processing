@@ -88,3 +88,5 @@ request_true_color = SentinelHubRequest(
 ```
 true_color_imgs = request_true_color.get_data(save_data=True)
 ```
+
+![Alt Text](https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/example1.png)
