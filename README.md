@@ -89,4 +89,41 @@ request_true_color = SentinelHubRequest(
 true_color_imgs = request_true_color.get_data(save_data=True)
 ```
 
-![Alt Text](https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/example1.png)
+
+<img src="https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/example1.png" height="350" width="500"  >
+
+
+# Basic Image Processing
+
+In this section basic image processing is performed.
+
+```
+image_gray = cv2.imread("example1.png",1)
+```
+
+```
+print("shape is",image_gray.shape,"\n")
+print(image_gray)
+plt.imshow(image_gray,cmap="gray")
+```
+<img src="https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/gray.png" height="350" width="500"  >
+
+```
+image_color = cv2.imread("example1.png",1)
+```
+```
+print("shape is",image_color.shape,"\n")
+print(image_color)
+plt.imshow(image_color)
+```
+OpenCV uses BGR color space instead of RGB so the image does not seem as we expect 
+
+<img src="https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/colorfalse.png" height="350" width="500"  >
+
+to convert it to RGB color space we will use the following script 
+
+```
+image_color_corrected = cv2.cvtColor(image_color2, cv2.COLOR_BGR2RGB)
+plt.imshow(image_color_corrected)
+```
+<img src="https://github.com/KianESoftware/Satellite-image-processing/blob/main/images/corrected_colorful.png" height="350" width="500"  >
