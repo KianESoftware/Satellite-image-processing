@@ -1,3 +1,6 @@
+# in this code a time interval is defined and satellite images for every week within the time interval are retrievd and downloaded.
+
+
 import sentinelhub
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
