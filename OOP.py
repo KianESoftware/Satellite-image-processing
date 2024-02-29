@@ -6,8 +6,8 @@ import matplotlib
 from datetime import datetime, timedelta
 
 config = SHConfig()
-config.sh_client_id = "sh-ef5a8a93-0fa7-4cd1-b392-4d058f3d611d"
-config.sh_client_secret = "df2iMfx7g8qcpDngaMvmi2LFdb3WW2n4"
+config.sh_client_id = "**********your_cliend _id **********"
+config.sh_client_secret = "**********your_cliend _secret **********"
 config.sh_token_url = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
 config.sh_base_url = "https://sh.dataspace.copernicus.eu"
 
@@ -121,7 +121,7 @@ obj1 = SatelliteImages(start_date=(2023,5,1),end_date=(2023,9,19),area_of_intere
   46.480743,
   19.411181,
   47.421893
-],directory=r'C:\Users\kiann\PycharmProjects\MyBestProject\github4',eval_script=evalscript_true_color)
+],directory=r'path\to\your\directory',eval_script=evalscript_true_color)
 
 
 obj1.test()
