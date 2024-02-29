@@ -1,6 +1,8 @@
 # Satellite-image-processing
 Querying, Accessing, downloading satellite images using APIs and performing basic processing operations using OpenCV. 
 
+To access the object oriented version (OOP) please check the oop.py file where code for accessing and downloading multiple images is provided. 
+
 in this repository SentinelHub Process API is used to access and retrieve Sentinel2-L2A RGB images.Next basic image processing operations are applied using OpenCV. All steps are explained step by step. 
 
 1) Accessing and downloading the satellite image
