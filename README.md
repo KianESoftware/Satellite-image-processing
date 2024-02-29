@@ -9,13 +9,17 @@ in this repository SentinelHub Process API is used to access and retrieve Sentin
    
    1.2 determining the area of interest
    
-   1.3
+   1.3 Configuring the eval script
+
+   1.4 Making Request
+
+   1.5 Downloading Data
    
-2) Perform image processing
+3) Perform image processing
 
-jecbjkwa   
+ 
 
-### importing libraries
+### 1.1) importing libraries
 
 ```
 import sentinelhub
@@ -26,7 +30,7 @@ import matplotlib
 ```
 
 
-### determining the area on interest 
+### 1.2) Determining the area on interest 
 
 ```
 bbox = BBox(bbox=[
@@ -39,7 +43,7 @@ betsiboka_size = bbox_to_dimensions(bbox, resolution=resolution)
 print(f"Image shape at {resolution} m resolution: {betsiboka_size} pixels")
 ```
 
-### Configuring the eval script 
+### 1.3) Configuring the eval script 
 
 ```
 evalscript_true_color = """
@@ -62,7 +66,7 @@ evalscript_true_color = """
 """
 ```
 
-### Making Request
+### 1.4) Making Request
 
 ```
 request_true_color = SentinelHubRequest(
@@ -83,7 +87,7 @@ request_true_color = SentinelHubRequest(
 )
 ```
 
-### downloading the data 
+### 1.5) Downloading the Data 
 
 ```
 true_color_imgs = request_true_color.get_data(save_data=True)
