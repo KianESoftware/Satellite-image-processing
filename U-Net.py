@@ -1,51 +1,67 @@
-def multi_unet_model(n_classes=7, IMG_HEIGHT=256, IMG_WIDTH=256, IMG_CHANNELS=3):
-#Build the model
-    inputs = Input((IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS))
-    #s = Lambda(lambda x: x / 255)(inputs)   #No need for this if we normalize our inputs beforehand
-    s = inputs
+def build_unet(n_classes=7, img_height=256, img-width=256, img_channels=3):
 
-    #Contraction path
-    c1 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(s)
-    c1 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c1)
-    p1 = MaxPooling2D((2, 2))(c1)
+    inputs = Input((img_height, img-width, img_channels)
+ 
 
-    c2 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(p1)
-    c2 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c2)
-    p2 = MaxPooling2D((2, 2))(c2)
+    #Encoder
 
-    c3 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(p2)
-    c3 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c3)
-    p3 = MaxPooling2D((2, 2))(c3)
+    #block1
+    convolution_1 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(inputs)
+    convolution_2 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(convolution_1)
+    pooling_1 = MaxPooling2D((2, 2))(convolution_2)
 
-    c4 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(p3)
-    c4 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c4)
-    p4 = MaxPooling2D(pool_size=(2, 2))(c4)
+    #block2
+    convolution_3 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(pooling_1)
+    convolution_4 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(convolution_3)
+    pooling_2 = MaxPooling2D((2, 2))(convolution_4)
 
-    c5 = Conv2D(256, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(p4)
-    c5 = Conv2D(256, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c5)
+    #block3
+    convolution_5 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(pooling_2)
+    concolution_6 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(convolution_5)
+    pooling_3 = MaxPooling2D((2, 2))(concolution_6)
 
-    #Expansive path
-    u6 = Conv2DTranspose(128, (2, 2), strides=(2, 2), padding='same')(c5)
-    u6 = concatenate([u6, c4])
-    c6 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u6)
-    c6 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c6)
+    
+    #block4
+    convolution_7 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(pooling_3)
+    convolution_8 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(convolution_7)
+    pooling_4 = MaxPooling2D(pool_size=(2, 2))(convolution_8 )
 
-    u7 = Conv2DTranspose(64, (2, 2), strides=(2, 2), padding='same')(c6)
-    u7 = concatenate([u7, c3])
-    c7 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u7)
-    c7 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c7)
+    
+    #block5
+    convolution_9 = Conv2D(256, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(pooling_4)
+    convolution_10 = Conv2D(256, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(convolution_9)
 
-    u8 = Conv2DTranspose(32, (2, 2), strides=(2, 2), padding='same')(c7)
-    u8 = concatenate([u8, c2])
-    c8 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u8)
-    c8 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c8)
 
-    u9 = Conv2DTranspose(16, (2, 2), strides=(2, 2), padding='same')(c8)
-    u9 = concatenate([u9, c1], axis=3)
-    c9 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u9)
-    c9 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c9)
+    # Decoder branch
 
-    outputs = Conv2D(7, (1, 1), activation='softmax')(c9)
+    #block6
+    up_convolution_11 = Conv2DTranspose(128, (2, 2), strides=(2, 2), padding='same')(convolution_10)
+    copy_crop_1 = concatenate([up_convolution_11, convolution_8])
+    convolution_12 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u6)
+    convolution_13 = Conv2D(128, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c6)
+
+
+    #block7
+    up_convolution_14 = Conv2DTranspose(64, (2, 2), strides=(2, 2), padding='same')(c6)
+    ucopy_crop_2 = concatenate([up_convolution_14, convolution_6])
+    concolution_15 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u7)
+    convolution_16 = Conv2D(64, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c7)
+
+
+    #block8
+    up_convolution_17 = Conv2DTranspose(32, (2, 2), strides=(2, 2), padding='same')(c7)
+    copy_crop3 = concatenate([up_convolution_17, convolution_4])
+    convolution_18 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u8)
+    convolution_19 = Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c8)
+
+
+    #block9
+    up_convolution_20 = Conv2DTranspose(16, (2, 2), strides=(2, 2), padding='same')(c8)
+    copy_crop_4 = concatenate([up_convolution_20, convolution_2], axis=3)
+    convolution_21 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(u9)
+    convolution_22 = Conv2D(16, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same')(c9)
+
+    output_layer_23 = Conv2D(7, (1, 1), activation='softmax')(c9)
 
     model = Model(inputs=[inputs], outputs=[outputs])
 
