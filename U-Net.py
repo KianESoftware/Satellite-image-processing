@@ -65,9 +65,6 @@ def build_unet(n_classes=7, img_height=256, img-width=256, img_channels=3):
 
     model = Model(inputs=[inputs], outputs=[outputs])
 
-    #NOTE: Compile the model in the main program to make it easy to test with various loss functions
-    #model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-
     #model.summary()
 
     return model
