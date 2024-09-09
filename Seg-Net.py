@@ -1,3 +1,5 @@
+# building Segnet in Keras
+
 def segnet(input_shape=(256, 256, 3), num_classes=7):
   
     # Encoder
